@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 export default function RecallrPage() {
   const [script, setScript] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [socketReady, setSocketReady] = useState(false)
+
   type WordFeedback = { word: string; correct: boolean }
   const [transcriptFeedback, setTranscriptFeedback] = useState<WordFeedback[]>([])
   
@@ -21,7 +23,8 @@ export default function RecallrPage() {
     wsRef.current = ws
 
     ws.onopen = () => {
-      console.log('WebSocket connected')
+      console.log('✅ WebSocket connected')
+      setSocketReady(true)
 
       // Send reference script
       ws.send(JSON.stringify({ type: 'script', payload: script }))
@@ -49,10 +52,16 @@ export default function RecallrPage() {
   }
 
   const handleStop = () => {
-    mediaRecorderRef.current?.stop()
-    wsRef.current?.send(JSON.stringify({ type: 'end' }))
-    wsRef.current?.close()
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      mediaRecorderRef.current?.stop()
+      wsRef.current.send(JSON.stringify({ type: 'end' }))
+      wsRef.current.close()
+      console.log('🔴 Session stopped and WebSocket closed')
+    } else {
+      console.warn('WebSocket not open yet! State:', wsRef.current?.readyState)
+    }
   }
+  
 
   return (
     <div className="min-h-screen flex items-start justify-center p-6 bg-background">
@@ -102,7 +111,10 @@ export default function RecallrPage() {
           {submitted && (
             <button
               onClick={handleStop}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              className={`px-4 py-2 text-white rounded ${
+                socketReady ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
+              }`}
+              disabled={!socketReady}
             >
               Stop Session
             </button>
@@ -111,4 +123,4 @@ export default function RecallrPage() {
       </div>
     </div>
   )
-}  
+}
