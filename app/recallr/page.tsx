@@ -19,7 +19,8 @@ export default function RecallrPage() {
     setSubmitted(true)
 
     // Connect to backend WebSocket
-    const ws = new WebSocket('wss://recallr.onrender.com/ws')
+    //const ws = new WebSocket('wss://recallr.onrender.com/ws')
+    const ws = new WebSocket('ws://localhost:8000/ws')
     wsRef.current = ws
 
     ws.onopen = () => {
@@ -31,11 +32,14 @@ export default function RecallrPage() {
     }
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data)
+      console.log("📨 WebSocket message received:", event.data);
+      const data = JSON.parse(event.data);
       if (data.type === 'transcript') {
-        setTranscriptFeedback(data.payload)
+        console.log("✅ Parsed transcript payload:", data.payload);
+        setTranscriptFeedback(data.payload);
       }
-    }
+    };
+    
 
     // Get mic access
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
