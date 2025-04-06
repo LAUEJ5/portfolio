@@ -71,71 +71,18 @@ export default function Home() {
       <main>
         <h1 className="text-4xl font-bold mb-16">Hey, I'm Jeremy.</h1>
 
+        <Link href="/recallr" className="block hover:opacity-90 transition">
         <ProjectCard
-          title="Text-to-Speech Displayer"
-          description="A tool that converts text to speech with real-time visualization. Built with React for the frontend and a Node.js backend hosted on Render."
+          title="Recallr – Real-Time Speech Comparison"
+          description="Compare your spoken words to a reference script in real-time. Built with FastAPI, WebSockets, and Deepgram."
           features={[
-            "Multiple voice options",
-            "Adjustable speech rate and pitch",
-            "Visual waveform display",
-            "Save audio as MP3"
+            "Real-time transcription feedback",
+            "Word-level correctness highlighting",
+            "Paste full scripts like The Lorax",
           ]}
-        >
-          <div id="text-to-speech-demo" className="space-y-4">
-            <textarea
-              placeholder="Enter text to convert to speech"
-              className="w-full min-h-[100px] p-2 border border-gray-300 rounded-md"
-              defaultValue="Hello! This is a demo of the text-to-speech displayer."
-            />
+        />
+      </Link>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Voice</label>
-                <select className="w-full p-2 border border-gray-300 rounded-md">
-                  <option value="default">Default</option>
-                  <option value="voice1">Voice 1</option>
-                  <option value="voice2">Voice 2</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Rate: 1.0</label>
-                <input
-                  type="range"
-                  min="0.5"
-                  max="2"
-                  step="0.1"
-                  defaultValue="1"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Pitch: 1.0</label>
-                <input
-                  type="range"
-                  min="0.5"
-                  max="2"
-                  step="0.1"
-                  defaultValue="1"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <button className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">Play</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 disabled:opacity-50">Stop</button>
-              <button className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300">Save as MP3</button>
-            </div>
-
-            <div className="h-16 bg-gray-50 rounded-md border overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
-                Waveform visualization
-              </div>
-            </div>
-          </div>
-        </ProjectCard>
 
         {/* Placeholder cards */}
         <ProjectCard
