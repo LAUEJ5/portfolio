@@ -32,13 +32,19 @@ export default function RecallrPage() {
     }
 
     ws.onmessage = (event) => {
-      console.log("📨 WebSocket message received:", event.data);
-      const data = JSON.parse(event.data);
+      const data = JSON.parse(event.data)
       if (data.type === 'transcript') {
-        console.log("✅ Parsed transcript payload:", data.payload);
-        setTranscriptFeedback(data.payload);
+        // Normalize array payload to objects
+        console.log("📦 Raw data.payload received:", data.payload)
+        const normalized = data.payload.map(([word, correct]: [string, boolean]) => ({
+          word,
+          correct
+        }))
+        console.log("✅ Parsed transcript payload:", normalized)
+        setTranscriptFeedback(normalized)
       }
-    };
+    }
+    
     
 
     // Get mic access
