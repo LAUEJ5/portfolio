@@ -17,7 +17,7 @@ export default function RecallrPage() {
     setSubmitted(true)
 
     // Connect to backend WebSocket
-    const ws = new WebSocket('ws://localhost:8000/ws')
+    const ws = new WebSocket('wss://recallr.onrender.com/ws')
     wsRef.current = ws
 
     ws.onopen = () => {
