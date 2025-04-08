@@ -36,10 +36,7 @@ export default function RecallrPage() {
       if (data.type === 'transcript') {
         // Normalize array payload to objects
         console.log("📦 Raw data.payload received:", data.payload)
-        const normalized = data.payload.map(([word, correct]: [string, boolean]) => ({
-          word,
-          correct
-        }))
+        const normalized = data.payload
         console.log("✅ Parsed transcript payload:", normalized)
         setTranscriptFeedback(normalized)
       }
